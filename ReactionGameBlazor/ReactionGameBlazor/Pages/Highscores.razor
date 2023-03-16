@@ -1,0 +1,53 @@
+﻿@page "/Highscores"
+
+@inject HttpClient HttpClient
+
+<h1>Top 10 Highscores</h1>
+
+@if (highscores == null)
+{
+        <p>Loading...</p>
+}
+else if (highscores.Count == 0)
+{
+        <p>No highscores found.</p>
+}
+else
+{
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Time</th>
+                </tr>
+            </thead>
+            <tbody>
+            @foreach (var highscore in highscores)
+            {
+                        <tr>
+                            <td>@highscore.Name</td>
+                            <td>@highscore.Time</td>
+                        </tr>
+            }
+            </tbody>
+        </table>
+}
+
+@code {
+    private List<Highscore> highscores;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            var response = await HttpClient.GetAsync("https://localhost:7042/highscores/top10");
+            response.EnsureSuccessStatusCode();
+            highscores = await response.Content.ReadFromJsonAsync<List<Highscore>>();
+        }
+        catch (Exception ex)
+        {
+            // Log or handle any errors that occur while retrieving the highscores
+            Console.WriteLine(ex);
+        }
+    }
+}

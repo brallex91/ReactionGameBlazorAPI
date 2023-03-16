@@ -1,0 +1,94 @@
+﻿@page "/ReactionGame"
+
+@using Microsoft.JSInterop
+@using System.Diagnostics;
+
+@inject IJSRuntime JSRuntime
+
+<h1>
+    <img src="~/ReactionGameLogo.png" alt="Image description">
+</h1>
+
+@if (!gameStarted && !isWaiting)
+{
+    <button @onclick="StartGame">@buttonText</button>
+    <p>@stopWatch.ElapsedMilliseconds</p>
+}
+
+else if (isWaiting && !gameStarted)
+{
+    <h2>Waiting...</h2>
+}
+
+else if (gameStarted && !isWaiting)
+{
+    <button @onclick="StopGame">Stop</button>
+}
+
+@code {
+    private List<Highscore> highscores = new List<Highscore>();
+    private bool gameStarted = false;
+    private bool isWaiting = false;
+    private Stopwatch stopWatch = new Stopwatch();
+    private string resultMessage;
+    private string buttonText = "Start game";
+    private HttpClient client = new();
+    private int counter;
+
+    private async Task StartGame()
+    {
+        isWaiting = true;
+        counter = new Random().Next(3, 5);
+
+        for (int i = counter; i > 0; i--)
+        {
+            counter = i;
+            StateHasChanged();
+            await Task.Delay(1000);
+        }
+
+        stopWatch.Start();
+        isWaiting = false;
+        gameStarted = true;
+    }
+
+
+    private async Task StopGame()
+    {
+        gameStarted = false;
+        stopWatch.Stop();
+
+        if (IsNewHighscore(stopWatch.ElapsedMilliseconds))
+        {
+            await RegisterNewHighscore();
+        }
+    }
+
+    private bool IsNewHighscore(long elapsedMilliseconds)
+    {
+        if (highscores.Count < 10)
+        {
+            return true;
+        }
+
+        return !highscores.Any(h => h.Time <= elapsedMilliseconds);
+    }
+
+    private async Task RegisterNewHighscore()
+    {
+        resultMessage += "\nNew highscore!";
+        var name = await JSRuntime.InvokeAsync<string>("prompt", "Enter your name");
+        var highscore = new Highscore { Name = name, Time = stopWatch.ElapsedMilliseconds };
+
+        var response = await client.PostAsJsonAsync("https://localhost:7042/highscores", highscore);
+
+        if (response.IsSuccessStatusCode)
+        {
+            highscores = await client.GetFromJsonAsync<List<Highscore>>("https://localhost:7042/highscores/top10");
+        }
+        else
+        {
+            resultMessage += "\nFailed to post the highscore.";
+        }
+    }
+}
