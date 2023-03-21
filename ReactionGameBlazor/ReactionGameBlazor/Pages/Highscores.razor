@@ -2,36 +2,40 @@
 
 @inject HttpClient HttpClient
 
-<h1>Top 10 Highscores</h1>
+<center>
+<h1>
+    <img src="/Top10Highscores.png" alt="Top 10 Highscores">
+</h1>
 
 @if (highscores == null)
 {
-        <p>Loading...</p>
+        <p><b>Loading...</b></p>
 }
 else if (highscores.Count == 0)
 {
-        <p>No highscores found.</p>
+        <p><b>No highscores found.</b></p>
 }
 else
 {
         <table>
             <thead>
                 <tr>
-                    <th>Name</th>
-                    <th>Time</th>
+                    <th><img src="/Name.png" alt="Name"></th>
+                    <th><img src="/Time.png" alt="Time"></th>
                 </tr>
             </thead>
             <tbody>
             @foreach (var highscore in highscores)
             {
                         <tr>
-                            <td>@highscore.Name</td>
-                            <td>@highscore.Time</td>
+                        <td><b>@highscore.Name</b></td>
+                        <td><b>@highscore.Time</b></td>
                         </tr>
             }
             </tbody>
         </table>
 }
+</center>
 
 @code {
     private List<Highscore> highscores;

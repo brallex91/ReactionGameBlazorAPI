@@ -2,6 +2,7 @@
 
 html, body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    background-color: #808080
 }
 
 h1:focus {
@@ -44,6 +45,20 @@ a, .btn-link {
     position: fixed;
     width: 100%;
     z-index: 1000;
+}
+
+.button {
+    margin-top: 30px;
+}
+
+table {
+    border-collapse: collapse;
+    width: 15%;
+}
+
+th, td {
+    text-align: center;
+    padding: 5px;
 }
 
     #blazor-error-ui .dismiss {

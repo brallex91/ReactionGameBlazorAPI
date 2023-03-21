@@ -4,34 +4,42 @@
 @using System.Diagnostics;
 
 @inject IJSRuntime JSRuntime
-
+<center>
 <h1>
-    <img src="~/ReactionGameLogo.png" alt="Image description">
+    <img src="/ReactionGameLogo.png" alt="Reaction Game">
 </h1>
 
-@if (!gameStarted && !isWaiting)
+    
+@if (!gameStarted && !isWaiting && !isOver)
 {
-    <button @onclick="StartGame">@buttonText</button>
-    <p>@stopWatch.ElapsedMilliseconds</p>
+    <div class="button">
+            <b><button @onclick="StartGame"><b>PRESS TO START!</b></button></b>
+    </div>
 }
 
-else if (isWaiting && !gameStarted)
+else if (isWaiting && !gameStarted && !isOver)
 {
-    <h2>Waiting...</h2>
+        <h2><b>WAIT...</b></h2>
 }
 
-else if (gameStarted && !isWaiting)
+else if (gameStarted && !isWaiting && !isOver)
 {
-    <button @onclick="StopGame">Stop</button>
+    <button @onclick="StopGame"><b>PRESS NOW!</b></button>
 }
+
+@if(isOver)
+    {
+        <p>Your Reaction-Time was: <b>@stopWatch.ElapsedMilliseconds</b> miliseconds!</p>
+    }
+</center>
 
 @code {
     private List<Highscore> highscores = new List<Highscore>();
     private bool gameStarted = false;
     private bool isWaiting = false;
+    private bool isOver = false;
     private Stopwatch stopWatch = new Stopwatch();
     private string resultMessage;
-    private string buttonText = "Start game";
     private HttpClient client = new();
     private int counter;
 
@@ -52,10 +60,10 @@ else if (gameStarted && !isWaiting)
         gameStarted = true;
     }
 
-
     private async Task StopGame()
     {
         gameStarted = false;
+        isOver = true;
         stopWatch.Stop();
 
         if (IsNewHighscore(stopWatch.ElapsedMilliseconds))
@@ -76,7 +84,6 @@ else if (gameStarted && !isWaiting)
 
     private async Task RegisterNewHighscore()
     {
-        resultMessage += "\nNew highscore!";
         var name = await JSRuntime.InvokeAsync<string>("prompt", "Enter your name");
         var highscore = new Highscore { Name = name, Time = stopWatch.ElapsedMilliseconds };
 

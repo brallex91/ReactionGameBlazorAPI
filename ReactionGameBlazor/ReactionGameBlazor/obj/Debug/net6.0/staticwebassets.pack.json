@@ -5,6 +5,26 @@
       "PackagePath": "staticwebassets\\ReactionGameBlazor.bundle.scp.css"
     },
     {
+      "Id": "C:\\Users\\allex\\Desktop\\ReactionGameBlazorAPI\\ReactionGameBlazor\\ReactionGameBlazor\\wwwroot\\Name.png",
+      "PackagePath": "staticwebassets\\Name.png"
+    },
+    {
+      "Id": "C:\\Users\\allex\\Desktop\\ReactionGameBlazorAPI\\ReactionGameBlazor\\ReactionGameBlazor\\wwwroot\\ReactionGameLogo.png",
+      "PackagePath": "staticwebassets\\ReactionGameLogo.png"
+    },
+    {
+      "Id": "C:\\Users\\allex\\Desktop\\ReactionGameBlazorAPI\\ReactionGameBlazor\\ReactionGameBlazor\\wwwroot\\ReactionGameRules.png",
+      "PackagePath": "staticwebassets\\ReactionGameRules.png"
+    },
+    {
+      "Id": "C:\\Users\\allex\\Desktop\\ReactionGameBlazorAPI\\ReactionGameBlazor\\ReactionGameBlazor\\wwwroot\\Time.png",
+      "PackagePath": "staticwebassets\\Time.png"
+    },
+    {
+      "Id": "C:\\Users\\allex\\Desktop\\ReactionGameBlazorAPI\\ReactionGameBlazor\\ReactionGameBlazor\\wwwroot\\Top10Highscores.png",
+      "PackagePath": "staticwebassets\\Top10Highscores.png"
+    },
+    {
       "Id": "C:\\Users\\allex\\Desktop\\ReactionGameBlazorAPI\\ReactionGameBlazor\\ReactionGameBlazor\\wwwroot\\css\\bootstrap\\bootstrap.min.css",
       "PackagePath": "staticwebassets\\css\\bootstrap\\bootstrap.min.css"
     },
